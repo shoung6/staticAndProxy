@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <style>
+      .jd {
+        height: 16px;
+        border: 1px solid #000;
+        font-size: 14px;
+        display: inline-block;
+        padding: 0 10px;
+        border-radius: 3px;
+      }
+      .jd::before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 100%;
+        margin-top: 1px;
+      }
+      .test2 {
+        height: 15px;
+        line-height: 15px;
+        border: 1px solid #000;
+        font-size: 10px;
+        display: inline-block;
+        padding: 0 10px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <span>黑科技</span>
+      <div class="jd">嘻嘻我</div>
+    </div>
+    <div>
+      <span>普通写法</span>
+      <div class="test2">嘻嘻我</div>
+    </div>
+    <div id="app">
+      <div>
+        <textarea style="height: 500px; width: 500px" v-model="a"></textarea>
+        <button style="vertical-align: top" @click="doIt">px2rpx</button>
+        <textarea style="height: 500px; width: 500px" v-model="b"></textarea>
+      </div>
+      <div>
+        <textarea style="height: 500px; width: 500px" v-model="a3"></textarea>
+        <button style="vertical-align: top" @click="doIt3">
+          react 2 vue template
+        </button>
+        <textarea style="height: 500px; width: 500px" v-model="b3"></textarea>
+      </div>
+      <div>
+        <textarea style="height: 500px; width: 500px" v-model="a1"></textarea>
+        <button style="vertical-align: top" @click="doIt2">rpx2px</button>
+        <textarea style="height: 500px; width: 500px" v-model="b1"></textarea>
+      </div>
+      <div v-for="item in arr" :key="item.va">{{opt(item.va).substr(1)}}</div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          arr: [{ va: "12" }, { va: "22" }],
+          a: "",
+          b: "",
+          a1: "",
+          b1: "",
+          a3: "",
+          b3: "",
+        },
+        methods: {
+          opt(a) {
+            return a;
+          },
+          doIt() {
+            this.b = this.a.replace(/\d+(\.\d+)?px/g, (a) => {
+              console.log(a);
+              a = a.replace("px", "rpx");
+              a = a.replace(/\d+(\.\d+)?/, (b) => Number((b * 2).toFixed(0)));
+              return a;
+            });
+          },
+          doIt2() {
+            this.b1 = this.a1.replace(/\d+(\.\d+)?rpx/g, (a) => {
+              console.log(a);
+              a = a.replace("rpx", "px");
+              a = a.replace(/\d+(\.\d+)?/, (b) => {
+                if (b === "1") {
+                  return b;
+                }
+                return Number((b / 2).toFixed(2));
+              });
+              return a;
+            });
+          },
+          doIt3() {
+            this.b3 = this.a3.replace(/className={styles.(.*?)}/g, (a, b) => {
+              console.log(a, b);
+              return `class="${b}"`;
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
